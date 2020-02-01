@@ -1,3 +1,3 @@
-# Spaceflight-Mechanics
-Spaceflight mechanics, constellation builder and gool graphs
+# Groundtracks
+Spaceflight mechanics and groundtracks
 Python
