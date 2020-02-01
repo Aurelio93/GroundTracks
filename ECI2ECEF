@@ -1,0 +1,25 @@
+def ECI2ECEF(JD, rVectECI):
+    #Function that trasforms a vector from ECI to ECEF at epochs JD
+    
+    import numpy as np
+    Tsid = 86164;
+    Tsol = 24*3600;
+    Rterra = 6378.1363;
+    wterra = 2*np.pi/Tsid;
+    alfag0 = 100*pi/180;
+    D = 1;
+    M=1;
+    Y=1995;
+    a = (14-M)/12;
+    y = Y+4800-a;
+    m = M+12*a - 3;
+    JD_0 = D + np.abs((153*m+2)/5)+365*y+np.abs(y/4)+np.abs(y/100)+np.abs(y/400)-32045;
+    MJD_0 = JD_0-2400000.5;
+    MJD = JD-2400000.5
+    alfag = alfag0+wterra*(MJD-MJD_0)*Tsol;
+    Ralfa = np.array([[np.cos(alfag), np.sin(alfag), 0]
+                      [-np.sin(alfag), np.cos(alfag), 0]
+                      [0, 0, 1]]);
+    rVectECEF = np.dot(Ralfa,np.transpose(rVectECI));
+    
+    return rVectECEF
