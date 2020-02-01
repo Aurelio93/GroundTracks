@@ -1,0 +1,50 @@
+def rvECI2coe(r0,v0,amu):
+    #Function that from a position and velocity finds the classical orbital elements
+    import numpy as np
+    Rterra = 6378.1363;
+    if len(r0)!=3 or len(v0)!=3:
+        print('error')
+        exit
+    
+    X = [1,0,0];
+    Y = [0,1,0];
+    Z = [0,0,1];
+    versr = r0/np.linalg.norm(r0);
+    h = np.cross(r0,v0);
+    versh = np.divide(h,np.linalg.norm(h));
+    i = np.arccos(np.dot(versh,Z));
+    versnodi1=np.cross(Z,versh);
+    versnodi = np.divide(versnodi1,np.linalg.norm(versnodi1))
+    SinRaan=np.dot(versnodi,Y);
+    CosRaan=np.dot(versnodi,X);
+    if CosRaan>=0:
+        RAAN = np.arctan(SinRaan/CosRaan);
+    else:
+        RAAN = np.arctan(SinRaan/CosRaan)+np.pi;
+    e = (np.dot((1/amu),np.cross(v0,h)))-versr;
+    verse = np.divide(e,np.linalg.norm(e));
+    versp = np.cross(versh,verse);
+    CosW = np.dot(verse,versnodi);
+    SinW = np.dot(np.cross(versnodi,verse),versh);
+    if CosW>=0 :
+        w=np.arctan(SinW/CosW);
+    else:
+        w=np.arctan(SinW/CosW) +np.pi;
+    Energia = (np.linalg.norm(v0)**2)/2 - amu/np.linalg.norm(r0);
+    a = - amu/(2*Energia);
+    ecc = np.linalg.norm(e);
+    CosAnu0 = np.dot(versr,verse);
+    SinAnu0 = np.dot(versr,versp);
+    if CosAnu0>=0:
+        anu0=np.arctan(SinAnu0/CosAnu0);
+    else:
+        anu0=np.arctan(SinAnu0/CosAnu0)+np.pi;
+        
+    COE = np.zeros(6);
+    COE[0] =a;
+    COE[1]=ecc;
+    COE[2]=i;
+    COE[3]=RAAN;
+    COE[4]=w;
+    COE[5]=anu0;
+    return COE
