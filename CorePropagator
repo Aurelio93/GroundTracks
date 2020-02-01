@@ -1,0 +1,31 @@
+def CorePropagator(r0,v0,dt):
+    #Function that given position and velcoty at a certain epoch
+    #calculates position and velocity after a dt
+    import rvECI2coe
+    import anu2AE
+    import AE2XM
+    import XM2AE
+    import AE2anu
+    import coe2rvECI
+    import numpy as np
+    amu = 398600.4415;
+    Rterra = 6378.1363;
+    COE = rvECI2coe.rvECI2coe(r0,v0,amu);
+    a = COE[0];
+    ecc = COE[1];
+    i = COE[2];
+    RAAN = COE[3];
+    w = COE[4];
+    anu0 = COE[5];
+
+    AE0 = anu2AE.anu2AE(ecc,anu0);
+    XM0 = AE2XM.AE2XM(ecc,AE0);
+    n0 = np.sqrt(amu/a**3);
+    t0 = XM0/n0;
+    t1 = t0+dt;
+    XM1 = n0*t1;
+    AE1 = XM2AE.XM2AE(ecc,XM1);
+    anu1 = AE2anu.AE2anu(ecc,AE1);
+    COE[5]=anu1;
+    r,v=coe2rvECI.coe2rvECI(COE,amu);
+    return r,v
