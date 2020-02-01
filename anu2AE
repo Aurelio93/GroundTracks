@@ -1,0 +1,8 @@
+def anu2AE(ecc, anu):
+    ##Function that given eccentricity and true anomaly
+    ##gives the eccentric anomaly
+    
+    import numpy as np
+    
+    AE = 2*np.arctan(np.sqrt((1-ecc)/(1+ecc)*np.tan(anu/2)));
+    return AE
