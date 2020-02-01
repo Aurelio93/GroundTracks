@@ -1,0 +1,12 @@
+def Trajectory(r0,v0,tspan):
+
+    #Function that given initial position and velocity of a sc in an inertial reference frame
+    # and a epochs' vector, calculate position and velocity of the sc in each of the epoch
+    # represents graphically the trajectory of the sc in the same reference system
+    import ShellPropagator
+    amu = 398600.4415;
+    R_earth = 6378.1363;
+    rMatrixECI, vMatrixECI = ShellPropagator.ShellPropagator(r0,v0,tspan);
+#    DrawTraj3D(rMatrixECI,vMatrixECI);
+    return rMatrixECI, vMatrixECI
+
