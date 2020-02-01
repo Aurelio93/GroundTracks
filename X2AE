@@ -1,0 +1,20 @@
+def XM2AE(ecc,XM):
+    ##Function that given eccentry and the medium anomaly
+    ##returns the eccentric anomaly solving the kepler equation with
+    ## Newton rhapson
+    
+    import numpy as np
+    eps = 10**(-6);
+    AEin = XM;
+    err = 100;
+    while err>eps:
+        df= 1-ecc*np.cos(AEin);
+        AE = AEin-((AEin-ecc*np.sin(AEin)-XM)/df);
+        err = np.abs(AE-AEin);
+        if df==0:
+            print('It''s not converging to the solution')
+            break
+        AEin = AE;
+        
+    return AE
+    
