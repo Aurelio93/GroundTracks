@@ -1,0 +1,19 @@
+def DrawTraj3D(rMatrixECI, vMatrixECI):
+    ##Function that given several values of position and velocity draws the
+    ## trajectory
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    
+    X = rMatrixECI[0,:];
+    Y = rMatrixECI[1,:];
+    Z = rMatrixECI[2,:];
+    vx = vMatrixECI[0,:];
+    vy = vMatrixECI[1,:];
+    vz = vMatrixECI[2,:];
+    
+#    fig = plt.figure()
+#    Axes3D.quiver(X,Y,Z,vx,vy,vz);
+#    plt.title('Quiver graph')
+#    plt.show()
