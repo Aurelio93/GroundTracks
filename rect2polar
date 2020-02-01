@@ -1,0 +1,11 @@
+def rect2polar(rVect):
+    #Function that transforms a vector from carthesian to polar coordinates
+    
+    import numpy as np
+    r = np.linalg.norm(rVect);
+    CosTh = rVect[1]/r;
+    SinTh = rVect[2]/r;
+    th = np.arctan(SinTh/CosTh);
+    fi = np.arcsin(rVect[3]/r);
+    
+    return r, th, fi
