@@ -1,0 +1,16 @@
+def ShellPropagator(r0,v0,tspan):
+    #Function that, assigned an epoch's vector, caluclates the
+    #position/velocity of a sc at the epochs
+    import numpy as np
+    import CorePropagator
+    Rterra = 6378.1363;
+    n = len(tspan);
+    rMatrixECI = np.zeros([3,n])
+    vMatrixECI = np.zeros([3,n]);
+    for i in range(n):
+        dt = tspan[i] - tspan[0];
+        r,v = CorePropagator.CorePropagator(r0,v0,dt);
+        rMatrixECI[:,i] = np.transpose(r);
+        vMatrixECI[:,i] = np.transpose(v);
+    return rMatrixECI, vMatrixECI
+
