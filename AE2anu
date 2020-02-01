@@ -1,0 +1,8 @@
+def AE2anu(ecc,AE):
+    ##Function that from eccentricity and eccentric anomaly gives the true anomaly
+    import math
+    if ecc>=1 or ecc <0:
+        print('Attenzione, l''eccentricitá per un orbita ellittica deve essere compresa tra 0 e 1')
+    else:
+        anu = 2*math.atan(math.sqrt((1+ecc)/(1-ecc))*math.tan(AE/2))
+        return anu
