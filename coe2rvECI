@@ -1,0 +1,41 @@
+def coe2rvECI(COE,amu):
+    ##Function that from the classical orbital elements finds position and velocity
+    
+    import numpy as np
+    Rterra = 6378.1363;
+    a = COE[0];
+    ecc = COE[1];
+    i = COE[2];
+    RAAN = COE[3];
+    w = COE[4];
+    anu = COE[5];
+    
+    n0 = np.sqrt(amu/(a**3));
+    p = a*(1-ecc**2);
+    h = np.sqrt(amu*p);
+    Vr = (amu/h)*ecc*np.sin(anu);
+    Vteta = (amu/h)*(1+ecc*np.cos(anu));
+    Vh = 0;
+    Vruh = np.array([Vr, Vteta, Vh]);
+    r = p/(1+ecc*np.cos(anu));
+    re = r*np.cos(anu);
+    rp = r*np.sin(anu);
+    rh = 0;
+    Reph = np.array([re, rp, rh]);
+    Rraan = np.array([[np.cos(RAAN), np.sin(RAAN), 0],
+                      [-np.sin(RAAN), np.cos(RAAN), 0],
+                      [0, 0, 1]]);
+    Ri = np.array([[1,0,0],
+                  [0,np.cos(i), np.sin(i)],
+                  [0,-np.sin(i),np.cos(i)]]);
+    Rw = np.array([[np.cos(w), np.sin(w), 0],
+                      [-np.sin(w), np.cos(w), 0],
+                      [0, 0, 1]]);
+    rVect = np.linalg.multi_dot([np.transpose(Rraan),np.transpose(Ri),
+                                np.transpose(Rw),np.transpose(Reph)]);
+    Rteta = np.array([[np.cos(w+anu), np.sin(w+anu), 0],
+                      [-np.sin(w+anu), np.cos(w+anu), 0],
+                      [0,0,1]]);
+    vVect = np.linalg.multi_dot([np.transpose(Rraan),np.transpose(Ri),
+                                np.transpose(Rteta),np.transpose(Vruh)]);
+    return rVect, vVect
