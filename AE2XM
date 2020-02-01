@@ -1,0 +1,8 @@
+def AE2XM(ecc,AE):
+    ##Function that given eccentricy and eccentric anomaly gived
+    ##the medium anomaly
+    
+    import numpy as np
+    XM = AE - ecc*np.sin(AE);
+    
+    return XM
