@@ -1,0 +1,21 @@
+def GroundTrack(rMatrixECI,tspan):
+    #Function that calculates that rapresents graphically the ground track 
+    # of a satellite of which positions and the corresponding epochs are known
+    
+    import ShellTrace
+    #import DrawGround
+    import numpy as np
+    D = 15;
+    M = 1;
+    Y = 1995;
+    a = (14-M)/2;
+    y = Y+4800-a;
+    m = M+12*a - 3;
+    
+    JD = D+np.abs((153*m+2)/5)+365*y+np.abs(y/4)+np.abs(y/100) + np.abs(y/400)-32045;
+    tspan_d = tspan/(3600*24);
+    tspan_JD = JD+tspan_d;
+    LatVect, LongVect = ShellTrace.ShellTrace(rMatrixECI,tspan_JD);
+    #DrawGround(LatVect,LongVect)
+    
+    return LatVect, LongVect
