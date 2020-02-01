@@ -1,0 +1,18 @@
+def ShellTrace(rMatrixECI, tspan_JD):
+    #Function that given epochs and positions evaluates for each one the longitude and the latitude
+    
+    import CoreTrace
+    import numpy as np
+    
+    Tsid = 86164;
+    m,n = np.shape(rMatrixECI);
+    rVectECI = np.zeros([3,n])
+    LatVect = np.zeros(1,n);
+    LongVect = np.zeros(1,n);
+    for i in range(n):
+        rVectECI = rMatrixECI[:,i];
+        [Lat,Lon]=CoreTrace.CoreTrace(tspan_JD[i],rVectECI);
+        LatVect[i]=Lat;
+        LongVect[i]=Lon;
+        
+    return LatVect, LongVect
