@@ -1,0 +1,9 @@
+def CoreTrace(JD,rVectECI):
+    #Function that with the vector position calculates its groundtrack
+    import ECI2ECEF
+    import rect2polar
+    Rterra = 6378.1363;
+    
+    rVectECEF = ECI2ECEF.ECI2ECEF(JD,rVectECI);
+    r, Long, Lat = rect2polar.rect2polar(rVectECEF);
+    return Lat, Long
